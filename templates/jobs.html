@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scrapyd Dashboard - Jobs</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 0.5em;
+        }
+
+        .state-running {
+            background-color: green;
+        }
+
+        .state-pending {
+            background-color: yellow;
+        }
+
+        .state-finished {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project {{ project }}</h1>
+    <h2>Spiders</h2>
+    <table class="spiders">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for spider in spiders %}
+            <tr>
+                <td>{{ spider }}</td>
+                <td>
+                    <a href="/schedule?project={{ project }}&spider={{ spider }}">Schedule</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2>Jobs</h2>
+    <table class="jobs">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Spider</th>
+                <th>State</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.spider }}</td>
+                <td class="state-{{ job.state }}">{{ job.state }}</td>
+                <td>{{ job.start_time}}</td>
+                <td>{{ job.end_time }}</td>
+                <td>
+                    {% if job.state == 'running' %}
+                    <a href="/cancel?project={{ project }}&job={{ job.id }}">Cancel</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

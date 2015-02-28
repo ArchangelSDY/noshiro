@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scrapyd Dashboard</title>
+</head>
+<body>
+    <h1>Projects</h1>
+    <ul>
+        {% for proj in projects %}
+        <li><a href="/jobs?project={{ proj }}">{{ proj }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
