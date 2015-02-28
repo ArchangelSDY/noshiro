@@ -1,8 +1,11 @@
+import collections
+
 from jinja2 import Environment, FileSystemLoader
 import tornado.ioloop
 import tornado.web
 
 import scrapyd
+import statscol
 
 jinja_env = Environment(loader=FileSystemLoader('templates'))
 
@@ -21,6 +24,15 @@ class JobsHandler(tornado.web.RequestHandler):
         jobs = scrapyd.list_jobs(project)
         tpl = jinja_env.get_template('jobs.html')
         self.write(tpl.render(project=project, spiders=spiders, jobs=jobs))
+
+
+class JobStatsHandler(tornado.web.RequestHandler):
+    def get(self):
+        job_id = self.get_argument('job')
+        stats = statscol.get_stats(job_id)
+        sorted_stats = collections.OrderedDict(sorted(stats.items()))
+        tpl = jinja_env.get_template('job-stats.html')
+        self.write(tpl.render(job=job_id, stats=sorted_stats))
 
 
 class ScheduleSpiderHandler(tornado.web.RequestHandler):
@@ -42,6 +54,7 @@ class CancelJobHandler(tornado.web.RequestHandler):
 app = tornado.web.Application([
     (r'/', IndexHandler),
     (r'/jobs', JobsHandler),
+    (r'/job-stats', JobStatsHandler),
     (r'/schedule', ScheduleSpiderHandler),
     (r'/cancel', CancelJobHandler),
 ])

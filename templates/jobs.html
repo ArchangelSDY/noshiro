@@ -63,7 +63,7 @@
         <tbody>
             {% for job in jobs %}
             <tr>
-                <td>{{ job.id }}</td>
+                <td><a href="/job-stats?job={{ job.id }}">{{ job.id }}</a></td>
                 <td>{{ job.spider }}</td>
                 <td class="state-{{ job.state }}">{{ job.state }}</td>
                 <td>{{ job.start_time}}</td>

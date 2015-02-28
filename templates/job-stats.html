@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scrapyd Dashboard - Job Stats</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 0.5em;
+        }
+
+        .state-running {
+            background-color: green;
+        }
+
+        .state-pending {
+            background-color: yellow;
+        }
+
+        .state-finished {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job {{ job }}</h1>
+    <h2>Stats</h2>
+    <table class="spiders">
+        <tbody>
+            {% for k, v in stats.iteritems() %}
+            <tr>
+                <td>{{ k }}</td>
+                <td>{{ v }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
