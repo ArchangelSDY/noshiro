@@ -5,6 +5,7 @@ import tornado.ioloop
 import tornado.web
 
 import scrapyd
+import settings
 import statscol
 
 jinja_env = Environment(loader=FileSystemLoader('templates'))
@@ -60,5 +61,5 @@ app = tornado.web.Application([
 ])
 
 if __name__ == '__main__':
-    app.listen(8888)
+    app.listen(settings.PORT)
     tornado.ioloop.IOLoop.instance().start()

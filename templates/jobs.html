@@ -42,7 +42,7 @@
             <tr>
                 <td>{{ spider }}</td>
                 <td>
-                    <a href="/schedule?project={{ project }}&spider={{ spider }}">Schedule</a>
+                    <a href="schedule?project={{ project }}&spider={{ spider }}">Schedule</a>
                 </td>
             </tr>
             {% endfor %}
@@ -63,14 +63,14 @@
         <tbody>
             {% for job in jobs %}
             <tr>
-                <td><a href="/job-stats?job={{ job.id }}">{{ job.id }}</a></td>
+                <td><a href="job-stats?job={{ job.id }}">{{ job.id }}</a></td>
                 <td>{{ job.spider }}</td>
                 <td class="state-{{ job.state }}">{{ job.state }}</td>
                 <td>{{ job.start_time}}</td>
                 <td>{{ job.end_time }}</td>
                 <td>
                     {% if job.state == 'running' %}
-                    <a href="/cancel?project={{ project }}&job={{ job.id }}">Cancel</a>
+                    <a href="cancel?project={{ project }}&job={{ job.id }}">Cancel</a>
                     {% endif %}
                 </td>
             </tr>
