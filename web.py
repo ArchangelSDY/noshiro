@@ -40,17 +40,20 @@ class ScheduleSpiderHandler(tornado.web.RequestHandler):
     def get(self):
         project = self.get_argument('project')
         spider = self.get_argument('spider')
-        scrapyd.schedule_spider(project, spider)
-        self.redirect('/jobs?project=%s' % project)
+        status = scrapyd.schedule_spider(project, spider)
+        tpl = jinja_env.get_template('flash.html')
+        next_url = 'jobs?project=%s' % project
+        self.write(tpl.render(status=status, next_url=next_url))
 
 
 class CancelJobHandler(tornado.web.RequestHandler):
     def get(self):
         project = self.get_argument('project')
         job_id = self.get_argument('job')
-        scrapyd.cancel_job(project, job_id)
-        self.redirect('/jobs?project=%s' % project)
-
+        status =  scrapyd.cancel_job(project, job_id)
+        tpl = jinja_env.get_template('flash.html')
+        next_url = 'jobs?project=%s' % project
+        self.write(tpl.render(status=status, next_url=next_url))
 
 app = tornado.web.Application([
     (r'/', IndexHandler),
