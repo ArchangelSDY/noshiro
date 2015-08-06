@@ -64,5 +64,5 @@ app = tornado.web.Application([
 ])
 
 if __name__ == '__main__':
-    app.listen(settings.PORT)
+    app.listen(settings.PORT, address='127.0.0.1')
     tornado.ioloop.IOLoop.instance().start()
